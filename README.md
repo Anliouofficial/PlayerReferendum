@@ -9,6 +9,7 @@ PlayerReferendum 是一个基于 Bukkit API 的 Minecraft 服务器插件，允�
 每种类型可独立配置：
 通过百分比阈值（如 >50% 同意）
 执行命令（支持变量替换 %player%, %world%）
+
 权限要求
 默认描述文本
 ​玩家交互流程​
@@ -20,15 +21,18 @@ sequenceDiagram
 玩家C->>插件： 点击[拒绝]
 Note over 插件： 30秒后自动统计
 插件->>服务器： 执行"weather clear"命令
-​冷却机制​
+​
+冷却机制​
 防止刷屏：发起者需等待冷却时间（默认5分钟）
 动态提示：请等待 120 秒后再发起新的投票
+
 ​跨世界隔离​
 投票仅在同一世界的玩家间生效
 不同维度（主世界/地狱/末地）独立计票
 ​音效反馈​
 玩家投票时触发 BLOCK_NOTE_BLOCK_PLING 音效
 强化操作反馈体验
+
 技术亮点
 ​动态按钮生成​
 java
@@ -42,6 +46,7 @@ TextComponent createButton(String text, ChatColor color, String command) {
     command // 如 "/voteaccept d87f5a2d..."
   ));
 }
+
 ​线程安全设计​
 使用 ConcurrentHashMap 存储投票会话
 异步处理投票计数，避免主线程阻塞
@@ -53,7 +58,8 @@ java
 String cmd = type.getCommand()
   .replace("%player%", "玩家名")
   .replace("%world%", "world_nether");
-​配置驱动扩展​
+​
+配置驱动扩展​
 示例 config.yml:
 yaml
 复制
@@ -62,6 +68,7 @@ vote-types:
     command: "weather clear"
     pass-percent: 40.0  # 40%同意即通过
     permission: vote.weather
+
 使用场景
 场景类型	配置示例	应用效果
 游戏规则修改	/gamerule doDaylightCycle	投票决定是否开启昼夜交替
